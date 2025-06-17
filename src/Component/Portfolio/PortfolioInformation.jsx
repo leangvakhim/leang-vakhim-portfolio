@@ -75,7 +75,7 @@ const PortfolioInformation = () => {
                         <div className='lg:h-44 md:h-60 h-auto lg:w-70 w-full overflow-hidden rounded-2xl relative'>
                             <img
                                 src={web_design}
-                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full border-2 rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
+                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full   rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
                             />
                             <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300 z-10"></div>
                             <div className="invisible group-hover:visible absolute inset-0 flex items-center justify-center z-20">
@@ -98,7 +98,7 @@ const PortfolioInformation = () => {
                         <div className='lg:h-44 md:h-60 h-auto lg:w-70 w-full overflow-hidden rounded-2xl relative'>
                             <img
                                 src={web_design}
-                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full border-2 rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
+                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full   rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
                             />
                             <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300 z-10"></div>
                             <div className="invisible group-hover:visible absolute inset-0 flex items-center justify-center z-20">
@@ -121,7 +121,7 @@ const PortfolioInformation = () => {
                         <div className='lg:h-44 md:h-60 h-auto lg:w-70 w-full overflow-hidden rounded-2xl relative'>
                             <img
                                 src={web_design}
-                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full border-2 rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
+                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full   rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
                             />
                             <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300 z-10"></div>
                             <div className="invisible group-hover:visible absolute inset-0 flex items-center justify-center z-20">
@@ -148,7 +148,7 @@ const PortfolioInformation = () => {
                         <div className='lg:h-44 md:h-60 h-auto lg:w-70 w-full overflow-hidden rounded-2xl relative'>
                             <img
                                 src={application}
-                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full border-2 rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
+                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full   rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
                             />
                             <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300 z-10"></div>
                             <div className="invisible group-hover:visible absolute inset-0 flex items-center justify-center z-20">
@@ -171,7 +171,7 @@ const PortfolioInformation = () => {
                         <div className='lg:h-44 md:h-60 h-auto lg:w-70 w-full overflow-hidden rounded-2xl relative'>
                             <img
                                 src={application}
-                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full border-2 rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
+                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full   rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
                             />
                             <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300 z-10"></div>
                             <div className="invisible group-hover:visible absolute inset-0 flex items-center justify-center z-20">
@@ -194,7 +194,7 @@ const PortfolioInformation = () => {
                         <div className='lg:h-44 md:h-60 h-auto lg:w-70 w-full overflow-hidden rounded-2xl relative'>
                             <img
                                 src={application}
-                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full border-2 rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
+                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full   rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
                             />
                             <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300 z-10"></div>
                             <div className="invisible group-hover:visible absolute inset-0 flex items-center justify-center z-20">
@@ -221,7 +221,7 @@ const PortfolioInformation = () => {
                         <div className='lg:h-44 md:h-60 h-auto lg:w-70 w-full overflow-hidden rounded-2xl relative'>
                             <img
                                 src={web_development}
-                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full border-2 rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
+                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full   rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
                             />
                             <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300 z-10"></div>
                             <div className="invisible group-hover:visible absolute inset-0 flex items-center justify-center z-20">
@@ -244,7 +244,7 @@ const PortfolioInformation = () => {
                         <div className='lg:h-44 md:h-60 h-auto lg:w-70 w-full overflow-hidden rounded-2xl relative'>
                             <img
                                 src={web_development}
-                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full border-2 rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
+                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full   rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
                             />
                             <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300 z-10"></div>
                             <div className="invisible group-hover:visible absolute inset-0 flex items-center justify-center z-20">
@@ -267,7 +267,7 @@ const PortfolioInformation = () => {
                         <div className='lg:h-44 md:h-60 h-auto lg:w-70 w-full overflow-hidden rounded-2xl relative'>
                             <img
                                 src={web_development}
-                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full border-2 rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
+                                className='lg:h-44 md:h-60 h-auto lg:w-70 w-full   rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
                             />
                             <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300 z-10"></div>
                             <div className="invisible group-hover:visible absolute inset-0 flex items-center justify-center z-20">
