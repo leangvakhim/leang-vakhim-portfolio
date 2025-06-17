@@ -2,10 +2,11 @@ import React from 'react'
 import MenuSmallScreen from '../MenuSmallScreen'
 import MenuLargeScreen from '../MenuLargeScreen'
 import ShortHorizontalLine from '../ShortHorizontalLine'
+import BlogInformation from './BlogInformation'
 
 const BlogBody = () => {
     return (
-        <section className='relative flex flex-col border rounded-2xl mx-4 lg:mx-auto my-4 bg-[#1E1E1F] !border-[#383838] max-w-5xl overflow-x-hidden'>
+        <section className='relative flex flex-col border rounded-2xl mx-4 lg:mx-auto my-4 bg-[#1C1C1D] !border-[#383838] max-w-5xl overflow-x-hidden'>
             {/* menu for small screen*/}
             <MenuSmallScreen/>
             {/* title */}
@@ -16,6 +17,7 @@ const BlogBody = () => {
             </div>
             {/* short horizontal line */}
             <ShortHorizontalLine/>
+            <BlogInformation/>
         </section>
     )
 }
