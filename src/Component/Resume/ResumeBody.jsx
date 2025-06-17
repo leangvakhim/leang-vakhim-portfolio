@@ -3,6 +3,7 @@ import MenuSmallScreen from '../MenuSmallScreen'
 import MenuLargeScreen from '../MenuLargeScreen'
 import ShortHorizontalLine from '../ShortHorizontalLine'
 import ResumeInformation from './ResumeInformation'
+import ResumeSkill from './ResumeSkill'
 
 const ResumeBody = () => {
     return (
@@ -19,6 +20,8 @@ const ResumeBody = () => {
             <ShortHorizontalLine/>
             {/* Information */}
             <ResumeInformation/>
+            {/* Skill */}
+            <ResumeSkill/>
         </section>
     )
 }
