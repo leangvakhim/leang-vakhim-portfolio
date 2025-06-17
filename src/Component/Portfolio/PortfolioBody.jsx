@@ -2,6 +2,7 @@ import React from 'react'
 import MenuSmallScreen from '../MenuSmallScreen'
 import MenuLargeScreen from '../MenuLargeScreen'
 import ShortHorizontalLine from '../ShortHorizontalLine'
+import PortfolioInformation from './PortfolioInformation'
 
 const PortfolioBody = () => {
     return (
@@ -16,6 +17,7 @@ const PortfolioBody = () => {
             </div>
             {/* short horizontal line */}
             <ShortHorizontalLine/>
+            <PortfolioInformation/>
         </section>
     )
 }
