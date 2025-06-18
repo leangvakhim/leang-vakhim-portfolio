@@ -88,7 +88,9 @@ const Header = () => {
                 <div className='grid lg:grid-cols-2 grid-cols-1 px-4 py-6 gap-8'>
                     <div className='col-span-1'>
                         <div className='flex '>
-                            <img src={mail} alt="" className='p-3.5 border bg-[#1E1E1F] !border-[#383838] w-12 rounded-2xl object-contain'/>
+                            <div>
+                                <img src={mail} alt="" className='p-3.5 border bg-[#1E1E1F] !border-[#383838] w-12 rounded-2xl object-contain'/>
+                            </div>
                             <div className='flex ml-3 flex-col gap-1.5'>
                                 <h2 className='uppercase font-medium !text-[12px] !text-[#9E9E9E] poppins-medium'>Email</h2>
                                 <a href='mailto:vakhiml60@gmail.com' className='text-[14px] font-medium text-[#F8F8F8] poppins-semibold'>vakhiml60@gmail.com</a>
@@ -98,7 +100,9 @@ const Header = () => {
 
                     <div className='col-span-1'>
                         <div className='flex '>
-                            <img src={smartphone} alt="" className='p-3.5 border bg-[#1E1E1F] !border-[#383838] w-12 rounded-2xl object-contain'/>
+                            <div>
+                                <img src={smartphone} alt="" className='p-3.5 border bg-[#1E1E1F] !border-[#383838] w-12 rounded-2xl object-contain'/>
+                            </div>
                             <div className='flex ml-3 flex-col gap-1.5'>
                                 <h2 className='uppercase font-medium !text-[12px] !text-[#9E9E9E] poppins-medium'>phone</h2>
                                 <a href='tel:+85510202974' className='text-[14px] font-medium text-[#F8F8F8] poppins-semibold'>+855(10) 202 974</a>
@@ -108,7 +112,9 @@ const Header = () => {
 
                     <div className='col-span-1'>
                         <div className='flex '>
-                            <img src={calendar} alt="" className='p-3.5 border bg-[#1E1E1F] !border-[#383838] w-12 rounded-2xl object-contain'/>
+                            <div>
+                                <img src={calendar} alt="" className='p-3.5 border bg-[#1E1E1F] !border-[#383838] w-12 rounded-2xl object-contain'/>
+                            </div>
                             <div className='flex ml-3 flex-col gap-1.5'>
                                 <h2 className='uppercase font-medium !text-[12px] !text-[#9E9E9E] poppins-medium'>birthday</h2>
                                 <p className='text-[14px] font-medium text-[#F8F8F8] poppins-semibold'>June 17, 2025</p>
@@ -118,10 +124,12 @@ const Header = () => {
 
                     <div className='col-span-1'>
                         <div className='flex '>
-                            <img src={location} alt="" className='p-3.5 border bg-[#1E1E1F] !border-[#383838] w-12 rounded-2xl object-contain'/>
+                            <div>
+                                <img src={location} alt="" className='p-3.5 border bg-[#1E1E1F] !border-[#383838] w-12 rounded-2xl object-contain'/>
+                            </div>
                             <div className='flex ml-3 flex-col gap-1.5'>
                                 <h2 className='uppercase font-medium !text-[12px] !text-[#9E9E9E] poppins-medium'>location</h2>
-                                <p className='text-[14px] font-medium text-[#F8F8F8] poppins-semibold'>Chamka Morn, Phnom Penh, Cambodia</p>
+                                <p className='text-[14px] font-medium text-[#F8F8F8] poppins-semibold'>Tonle Basac, Chamka Morn, Phnom Penh, Cambodia</p>
                             </div>
                         </div>
                     </div>
