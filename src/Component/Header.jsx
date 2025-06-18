@@ -89,7 +89,7 @@ const Header = () => {
                     <div className='col-span-1'>
                         <div className='flex '>
                             <div className='h-12 w-12 shrink-0'>
-                                <img src={mail} alt="" className='p-3 border bg-[#1E1E1F] !border-[#383838] w-full h-full rounded-2xl object-contain'/>
+                                <img src={mail} alt="" className='p-3 border bg-[#202022] !border-[#383838] w-full h-full rounded-2xl object-contain border-r-0 border-b-0'/>
                             </div>
                             <div className='flex ml-3 flex-col gap-1.5'>
                                 <h2 className='uppercase font-medium !text-[12px] !text-[#9E9E9E] poppins-medium'>Email</h2>
@@ -101,7 +101,7 @@ const Header = () => {
                     <div className='col-span-1'>
                         <div className='flex '>
                             <div className='h-12 w-12 shrink-0'>
-                                <img src={smartphone} alt="" className='p-3 border bg-[#1E1E1F] !border-[#383838] w-full h-full rounded-2xl object-contain'/>
+                                <img src={smartphone} alt="" className='p-3 border bg-[#202022] !border-[#383838] w-full h-full rounded-2xl object-contain border-r-0 border-b-0'/>
                             </div>
                             <div className='flex ml-3 flex-col gap-1.5'>
                                 <h2 className='uppercase font-medium !text-[12px] !text-[#9E9E9E] poppins-medium'>phone</h2>
@@ -113,7 +113,7 @@ const Header = () => {
                     <div className='col-span-1'>
                         <div className='flex '>
                             <div className='h-12 w-12 shrink-0'>
-                                <img src={calendar} alt="" className='p-3 border bg-[#1E1E1F] !border-[#383838] w-full h-full rounded-2xl object-contain'/>
+                                <img src={calendar} alt="" className='p-3 border bg-[#202022] !border-[#383838] w-full h-full rounded-2xl object-contain border-r-0 border-b-0'/>
                             </div>
                             <div className='flex ml-3 flex-col gap-1.5'>
                                 <h2 className='uppercase font-medium !text-[12px] !text-[#9E9E9E] poppins-medium'>birthday</h2>
@@ -125,7 +125,7 @@ const Header = () => {
                     <div className='col-span-1'>
                         <div className='flex'>
                             <div className='h-12 w-12 shrink-0'>
-                                <img src={location} alt="" className='p-3 border bg-[#1E1E1F] !border-[#383838] w-full h-full rounded-2xl object-contain'/>
+                                <img src={location} alt="" className='p-3 border bg-[#202022] !border-[#383838] w-full h-full rounded-2xl object-contain border-r-0 border-b-0'/>
                             </div>
                             <div className='flex ml-3 flex-col gap-1.5'>
                                 <h2 className='uppercase font-medium !text-[12px] !text-[#9E9E9E] poppins-medium'>location</h2>
