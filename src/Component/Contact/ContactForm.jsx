@@ -20,19 +20,7 @@ const ContactForm = () => {
     const email = document.querySelector("input[placeholder='Email address']").value;
     const messageText = document.querySelector("textarea[placeholder='Your message']").value;
 
-    const token = "7648208519:AAEwgHlVg0dRLpSyGgrvU9yqMUaWx8V6bP8";
-    const chatId = "1294320723";
-
-    const message = `
-        ✉️ *New Contact Form Submission*
-
-        👤 *Name:* ${name}
-        📧 *Email:* ${email}
-        📝 *Message:* ${messageText}
-    `;
-
     const telegramUrl = 'https://leang-vakhim-portfolio.vercel.app/api/sendTelegram';
-    // const telegramUrl = `https://api.telegram.org/bot${token}/sendMessage`;
 
     try {
       const response = await fetch(telegramUrl, {
@@ -45,11 +33,6 @@ const ContactForm = () => {
             email,
             messageText
           })
-        // body: JSON.stringify({
-        //   chat_id: chatId,
-        //   text: message,
-        //   parse_mode: "Markdown"
-        // })
       });
 
       if (response.ok) {
