@@ -1,19 +1,30 @@
 export default async function handler(req, res) {
+    // CORS handling
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Or specify your domain instead of "*"
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Handle preflight request
+    if (req.method === 'OPTIONS') {
+      return res.status(200).end();
+    }
+
+    // Reject all methods other than POST
     if (req.method !== 'POST') {
       return res.status(405).json({ message: 'Method Not Allowed' });
     }
 
     const { name, email, messageText } = req.body;
 
-    const token = "7648208519:AAEwgHlVg0dRLpSyGgrvU9yqMUaWx8V6bP8";
-    const chatId = "1294320723";
+    const token = "YOUR_TELEGRAM_BOT_TOKEN";
+    const chatId = "YOUR_CHAT_ID";
     const text = `
   ✉️ *New Contact Form Submission*
 
   👤 *Name:* ${name}
   📧 *Email:* ${email}
   📝 *Message:* ${messageText}
-    `;
+  `;
 
     try {
       const telegramRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
@@ -32,4 +43,4 @@ export default async function handler(req, res) {
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
-}
+  }
