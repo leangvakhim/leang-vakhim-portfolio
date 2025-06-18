@@ -31,7 +31,8 @@ const ContactForm = () => {
         📝 *Message:* ${messageText}
     `;
 
-    const telegramUrl = `https://api.telegram.org/bot${token}/sendMessage`;
+    const telegramUrl = 'https://https://leang-vakhim-portfolio.vercel.app/api/sendTelegram';
+    // const telegramUrl = `https://api.telegram.org/bot${token}/sendMessage`;
 
     try {
       const response = await fetch(telegramUrl, {
@@ -40,10 +41,15 @@ const ContactForm = () => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          chat_id: chatId,
-          text: message,
-          parse_mode: "Markdown"
-        })
+            name,
+            email,
+            messageText
+          })
+        // body: JSON.stringify({
+        //   chat_id: chatId,
+        //   text: message,
+        //   parse_mode: "Markdown"
+        // })
       });
 
       if (response.ok) {
