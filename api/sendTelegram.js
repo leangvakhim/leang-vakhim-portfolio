@@ -16,8 +16,8 @@ export default async function handler(req, res) {
 
     const { name, email, messageText } = req.body;
 
-    const token = "YOUR_TELEGRAM_BOT_TOKEN";
-    const chatId = "YOUR_CHAT_ID";
+    const token = "7648208519:AAEwgHlVg0dRLpSyGgrvU9yqMUaWx8V6bP8";
+    const chatId = "1294320723";
     const text = `
   ✉️ *New Contact Form Submission*
 
