@@ -31,7 +31,7 @@ const ContactForm = () => {
         📝 *Message:* ${messageText}
     `;
 
-    const telegramUrl = 'https://https://leang-vakhim-portfolio.vercel.app/api/sendTelegram';
+    const telegramUrl = 'https://leang-vakhim-portfolio.vercel.app/api/sendTelegram';
     // const telegramUrl = `https://api.telegram.org/bot${token}/sendMessage`;
 
     try {
