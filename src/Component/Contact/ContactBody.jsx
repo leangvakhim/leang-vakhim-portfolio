@@ -2,6 +2,8 @@ import React from 'react'
 import MenuSmallScreen from '../MenuSmallScreen'
 import MenuLargeScreen from '../MenuLargeScreen'
 import ShortHorizontalLine from '../ShortHorizontalLine'
+import ContactMap from './ContactMap'
+import ContactForm from './ContactForm'
 
 const ContactBody = () => {
     return (
@@ -16,6 +18,10 @@ const ContactBody = () => {
             </div>
             {/* short horizontal line */}
             <ShortHorizontalLine/>
+            {/* Maps */}
+            <ContactMap/>
+            {/* Form */}
+            <ContactForm/>
         </section>
     )
 }
