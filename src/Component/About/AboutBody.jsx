@@ -5,6 +5,7 @@ import MenuSmallScreen from '../MenuSmallScreen';
 import MenuLargeScreen from '../MenuLargeScreen';
 import AboutDescription from './AboutDescription';
 import ShortHorizontalLine from '../ShortHorizontalLine';
+import AboutCertificate from './AboutCertificate';
 
 const AboutBody = () => {
 
@@ -26,6 +27,8 @@ const AboutBody = () => {
             <AboutCard/>
             {/* Badges */}
             <AboutBadge/>
+            {/* Certificates */}
+            <AboutCertificate/>
         </section>
     )
 }

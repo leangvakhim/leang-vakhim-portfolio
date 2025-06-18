@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { motion } from 'framer-motion';
 import tis from '../../assets/photo/tis.png';
+import aws_mlf from '../../assets/photo/aws-mlf.png';
 
 const AboutBadge = () => {
 
-    const badges = [tis, tis, tis, tis, tis, tis, tis, tis, tis];
+    const badges = [tis, aws_mlf, tis, aws_mlf, tis, aws_mlf, tis, aws_mlf];
+    const [selectedImage, setSelectedImage] = useState(null);
 
     return (
         <div className=' px-8 '>
@@ -18,11 +20,24 @@ const AboutBadge = () => {
                 >
                     {[...badges, ...badges].map((badge, index) => (
                         <div key={index} className="inline-block">
-                            <img src={badge} alt={`Badge ${index + 1}`} className='w-40 h-auto'/>
+                            <img
+                              src={badge}
+                              alt={`Badge ${index + 1}`}
+                              className='cursor-pointer w-40 h-40 object-cover'
+                              onClick={() => setSelectedImage(badge)}
+                            />
                         </div>
                     ))}
                 </motion.div>
             </div>
+            {selectedImage && (
+              <div
+                className="fixed inset-0 !bg-black !bg-opacity-50 flex items-center justify-center z-50 "
+                onClick={() => setSelectedImage(null)}
+              >
+                <img src={selectedImage} alt="Enlarged Badge" className="max-w-3xl max-h-[80vh] rounded-lg shadow-lg" />
+              </div>
+            )}
         </div>
     )
 }
