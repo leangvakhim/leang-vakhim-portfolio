@@ -12,7 +12,7 @@ const AboutBadge = () => {
         <div className=' px-8 '>
             <h1 className='text-3xl poppins-semibold !text-[#F8F8F8]'>Badges</h1>
             {/* badges scrollable */}
-            <div className="overflow-x-hidden py-12">
+            <div className="overflow-x-hidden py-6">
                 <motion.div
                     className="flex space-x-12 min-w-max"
                     animate={{ x: ['0%', '-50%'] }}
