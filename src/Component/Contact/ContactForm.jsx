@@ -2,6 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import Swal from 'sweetalert2';
 import message from "../../assets/photo/paper-plane.png"
+import { API_ENDPOINTS, axiosInstance } from '../APIConfig';
 
 const ContactForm = () => {
     const sendToTelegram = async (e) => {
@@ -23,38 +24,46 @@ const ContactForm = () => {
     const telegramUrl = 'https://leang-vakhim-portfolio.vercel.app/api/sendTelegram';
 
     try {
-      const response = await fetch(telegramUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            name,
-            email,
-            messageText
-          })
-      });
-
-      if (response.ok) {
-        Swal.close();
-        Swal.fire({
-          icon: 'success',
-          title: 'Message sent!',
-          text: 'Your message has been delivered successfully.',
-          confirmButtonColor: '#FFD36A'
+        const response = await fetch(telegramUrl, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                messageText
+            })
         });
-      } else {
-        throw new Error('Telegram API error');
-      }
-    } catch (error) {
-      Swal.close();
-      Swal.fire({
-        icon: 'error',
-        title: 'Failed to send',
-        text: 'There was a problem sending your message. Please try again.',
-        confirmButtonColor: '#FFD36A'
-      });
-    }
+
+        if (response.ok) {
+
+            const payload = {
+                e_name: name,
+                e_email: email,
+                e_detail: messageText,
+            };
+
+            await axiosInstance.post(API_ENDPOINTS.createEmail, payload);
+            Swal.close();
+            Swal.fire({
+            icon: 'success',
+            title: 'Message sent!',
+            text: 'Your message has been delivered successfully.',
+            confirmButtonColor: '#FFD36A'
+            });
+        } else {
+            throw new Error('Telegram API error');
+        }
+        } catch (error) {
+            Swal.close();
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to send',
+                text: 'There was a problem sending your message. Please try again.',
+                confirmButtonColor: '#FFD36A'
+            });
+        }
     };
 
     return (
