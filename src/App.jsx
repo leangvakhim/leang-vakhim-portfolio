@@ -6,20 +6,29 @@ import Resume from './Page/Resume'
 import Portfolio from './Page/Portfolio'
 import Blog from './Page/Blog'
 import Contact from './Page/Contact'
-import { autoLoginAsGuest } from './Component/APIConfig'
+import { API_ENDPOINTS, axiosInstance } from './Component/APIConfig'
 
 function App() {
-  const [authReady, setAuthReady] = useState(false);
 
   useEffect(() => {
-    const runAuth = async () => {
-      await autoLoginAsGuest();
-      setAuthReady(true);
-    };
-    runAuth();
-  }, []);
+    const loginGuest = async () => {
+      try {
+        await axiosInstance.post(API_ENDPOINTS.LoginUser, {
+          name: "guest",
+          password: "guest123"
+        }, {
+          withCredentials: true
+        });
 
-  if (!authReady) return <p>Loading...</p>;
+        sessionStorage.removeItem("guest_token");
+
+      } catch (error) {
+        console.error("Login failed:", error);
+      }
+    };
+
+    loginGuest();
+  }, []);
 
   return (
     <Router>
