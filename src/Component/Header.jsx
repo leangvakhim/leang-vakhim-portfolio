@@ -9,46 +9,151 @@ import calendar from "../assets/photo/calendar.png";
 import facebook from "../assets/photo/facebook.png";
 import telegram from "../assets/photo/telegram.png";
 import linkedin from "../assets/photo/linkedin.png";
+import { axiosInstance, API_ENDPOINTS } from './APIConfig';
+import { all } from 'axios';
 
 const Header = () => {
     const [showContacts, setShowContacts] = useState(false);
-
-    const words = ["Frontend Developer", "Backend Developer"];
+    const [names, setNames] = useState([]);
+    const [words, setWords] = useState([]);
+    const [informations, setInformtions] = useState([]);
+    const [socials, setSocials] = useState([]);
     const [displayText, setDisplayText] = useState("");
     const [wordIndex, setWordIndex] = useState(0);
     const [charIndex, setCharIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
-      const currentWord = words[wordIndex];
+        if (words.length === 0) return;
 
-      if (!isDeleting && charIndex <= currentWord.length) {
-        setTimeout(() => {
-          setDisplayText(currentWord.substring(0, charIndex));
-          setCharIndex((prev) => prev + 1);
-        }, 100);
-      }
+        const currentWord = words[wordIndex].t_detail;
 
-      if (isDeleting && charIndex >= 0) {
-        setTimeout(() => {
-          setDisplayText(currentWord.substring(0, charIndex));
-          setCharIndex((prev) => prev - 1);
-        }, 50);
-      }
+        if (!isDeleting && charIndex <= currentWord.length) {
+            setTimeout(() => {
+                setDisplayText(currentWord.substring(0, charIndex));
+                setCharIndex((prev) => prev + 1);
+            }, 100);
+        }
 
-      if (!isDeleting && charIndex === currentWord.length + 1) {
-        setTimeout(() => {
-          setIsDeleting(true);
-        }, 1000);
-      }
+        if (isDeleting && charIndex >= 0) {
+            setTimeout(() => {
+                setDisplayText(currentWord.substring(0, charIndex));
+                setCharIndex((prev) => prev - 1);
+            }, 50);
+        }
 
-      if (isDeleting && charIndex === 0) {
-        setTimeout(() => {
-          setIsDeleting(false);
-          setWordIndex((prev) => (prev + 1) % words.length);
-        }, 300);
-      }
-    }, [charIndex, isDeleting, wordIndex]);
+        if (!isDeleting && charIndex === currentWord.length + 1) {
+            setTimeout(() => {
+                setIsDeleting(true);
+            }, 1000);
+        }
+
+        if (isDeleting && charIndex === 0) {
+            setTimeout(() => {
+                setIsDeleting(false);
+                setWordIndex((prev) => (prev + 1) % words.length);
+            }, 300);
+        }
+    }, [charIndex, isDeleting, wordIndex, words]);
+
+    useEffect(() => {
+        const fetchRole = async () => {
+            try{
+                const response = await axiosInstance.get(API_ENDPOINTS.getText);
+                const allData = response.data.data;
+
+                const filteredRole = allData.filter(item => item.t_type === 2 && item.display === 1);
+                setWords(filteredRole);
+            }catch(error){
+                console.error("Failed to fetch role : ", error);
+            }
+        }
+
+        const fetchName = async () => {
+            try{
+                const response = await axiosInstance.get(API_ENDPOINTS.getText);
+                const allData = response.data.data;
+
+                const filteredName = allData.filter(item => item.t_type === 1 && item.display === 1);
+                setNames(filteredName);
+            }catch(error){
+                console.error("Failed to fetch role : ", error);
+            }
+        }
+
+        fetchName()
+        fetchRole();
+    }, []);
+
+    const fetchImageById = async (id) => {
+        try {
+            const response = await axiosInstance.get(`${API_ENDPOINTS.getImages}/${id}`);
+            return response.data.data;
+        } catch (error) {
+            console.error(`Failed to fetch image for id ${id}`, error);
+            return null;
+        }
+    };
+
+    useEffect(() => {
+        const fetchInformation = async () => {
+            try{
+                const response = await axiosInstance.get(API_ENDPOINTS.getInformation);
+                const allData = response?.data.data || [];
+
+                const newsArray = allData.filter(item => item.i_type === 1 && item.display === 1);
+                if (newsArray && !Array.isArray(newsArray)) {
+                    newsArray = [newsArray];
+                } else if (!newsArray) {
+                    newsArray = [];
+                }
+
+                const updatedNewsArray = await Promise.all(newsArray.map(async (item) => {
+                    const image = await fetchImageById(item.i_img);
+                    return {
+                        ...item,
+                        image: image
+                    };
+                }));
+
+                setInformtions(updatedNewsArray);
+            }catch(error){
+                console.error("Failed to fetch the information: ", error);
+            }
+        }
+
+        fetchInformation();
+    }, [])
+
+    useEffect(() => {
+        const fetchSocials = async () => {
+            try{
+                const response = await axiosInstance.get(API_ENDPOINTS.getSocial);
+                const allData = response?.data.data || [];
+
+                const newsArray = allData.filter(item => item.display === 1);
+                if (newsArray && !Array.isArray(newsArray)) {
+                    newsArray = [newsArray];
+                } else if (!newsArray) {
+                    newsArray = [];
+                }
+
+                const updatedNewsArray = await Promise.all(newsArray.map(async (item) => {
+                    const image = await fetchImageById(item.s_img);
+                    return {
+                        ...item,
+                        image: image
+                    };
+                }));
+
+                setSocials(updatedNewsArray);
+            }catch(error){
+                console.error("Failed to fetch the information: ", error);
+            }
+        }
+
+        fetchSocials();
+    }, [])
 
     return (
         <header className='relative flex flex-col border rounded-2xl mx-4 lg:mx-auto mt-16 mb-2 bg-[#1E1E1F] !border-[#383838] max-w-5xl'>
@@ -57,9 +162,14 @@ const Header = () => {
                     <div className='flex gap-4'>
                         <img src={Profile} alt="" className='w-28 h-28 rounded-2xl border !border-[#383838] object-fill'/>
                         <div className='flex flex-col gap-3 py-2 justify-center'>
-                            <h1 className='font-medium text-2xl font-mono !text-[#F8F8F8] poppins-medium'>Leang Vakhim</h1>
+                            {names.map((name) => (
+                                <h1 key={name.t_id} className='font-medium text-2xl font-mono !text-[#F8F8F8] poppins-medium'>{name.t_detail}</h1>
+                            ))}
                             <span className='text-[12px] poppins-light px-3 py-1.5 bg-[#2B2B2C] w-fit rounded-lg !text-[#F8F8F8] flex'>
-                              <span>{displayText}<span className="animate-pulse ml-1">|</span></span>
+                                <span>
+                                    {displayText}
+                                    <span className="animate-pulse ml-1">|</span>
+                                </span>
                             </span>
                         </div>
                     </div>
@@ -86,53 +196,37 @@ const Header = () => {
                 </div>
                 {/* icon */}
                 <div className='grid lg:grid-cols-2 grid-cols-1 px-4 py-6 gap-8'>
-                    <div className='col-span-1'>
-                        <div className='flex '>
-                            <div className='h-12 w-12 shrink-0'>
-                                <img src={mail} alt="" className='p-3 border bg-[#202022] !border-[#383838] w-full h-full rounded-2xl object-contain border-r-0 border-b-0'/>
-                            </div>
-                            <div className='flex ml-3 flex-col gap-1.5'>
-                                <h2 className='uppercase font-medium !text-[12px] !text-[#9E9E9E] poppins-medium'>Email</h2>
-                                <a href='mailto:vakhiml60@gmail.com' className='text-[14px] font-medium text-[#F8F8F8] poppins-semibold'>vakhiml60@gmail.com</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='col-span-1'>
-                        <div className='flex '>
-                            <div className='h-12 w-12 shrink-0'>
-                                <img src={smartphone} alt="" className='p-3 border bg-[#202022] !border-[#383838] w-full h-full rounded-2xl object-contain border-r-0 border-b-0'/>
-                            </div>
-                            <div className='flex ml-3 flex-col gap-1.5'>
-                                <h2 className='uppercase font-medium !text-[12px] !text-[#9E9E9E] poppins-medium'>phone</h2>
-                                <a href='tel:+85510202974' className='text-[14px] font-medium text-[#F8F8F8] poppins-semibold'>+855(10) 202 974</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='col-span-1'>
-                        <div className='flex '>
-                            <div className='h-12 w-12 shrink-0'>
-                                <img src={calendar} alt="" className='p-3 border bg-[#202022] !border-[#383838] w-full h-full rounded-2xl object-contain border-r-0 border-b-0'/>
-                            </div>
-                            <div className='flex ml-3 flex-col gap-1.5'>
-                                <h2 className='uppercase font-medium !text-[12px] !text-[#9E9E9E] poppins-medium'>birthday</h2>
-                                <p className='text-[14px] font-medium text-[#F8F8F8] poppins-semibold'>June 17, 2025</p>
+                    {informations.map((information) => (
+                        <div key={information.i_id} className='col-span-1'>
+                            <div className='flex '>
+                                <div className='h-12 w-12 shrink-0'>
+                                    <img src={information.image.image_url} alt="" className='p-3 border bg-[#202022] !border-[#383838] w-full h-full rounded-2xl object-contain border-r-0 border-b-0'/>
+                                </div>
+                                <div className='flex ml-3 flex-col gap-1.5'>
+                                    <h2 className='uppercase font-medium !text-[12px] !text-[#9E9E9E] poppins-medium'>{information.i_title}</h2>
+                                    {information.i_title.toLowerCase() === 'email' ? (
+                                      <a
+                                        href={`mailto:${information.i_detail}`}
+                                        className='text-[14px] font-medium text-[#F8F8F8] poppins-semibold'
+                                      >
+                                        {information.i_detail}
+                                      </a>
+                                    ) : information.i_title.toLowerCase() === 'phone' ? (
+                                      <a
+                                        href={`tel:${information.i_detail.replace(/[^+\d]/g, '')}`}
+                                        className='text-[14px] font-medium text-[#F8F8F8] poppins-semibold'
+                                      >
+                                        {information.i_detail}
+                                      </a>
+                                    ) : (
+                                      <a className='text-[14px] font-medium text-[#F8F8F8] poppins-semibold'>
+                                        {information.i_detail}
+                                      </a>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div className='col-span-1'>
-                        <div className='flex'>
-                            <div className='h-12 w-12 shrink-0'>
-                                <img src={location} alt="" className='p-3 border bg-[#202022] !border-[#383838] w-full h-full rounded-2xl object-contain border-r-0 border-b-0'/>
-                            </div>
-                            <div className='flex ml-3 flex-col gap-1.5'>
-                                <h2 className='uppercase font-medium !text-[12px] !text-[#9E9E9E] poppins-medium'>location</h2>
-                                <p className='text-[14px] font-medium text-[#F8F8F8] poppins-semibold'>Tonle Basac, Chamka Morn, Phnom Penh, Cambodia</p>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
                 {/* horizontal line */}
                 <div className='flex !items-center '>
@@ -141,9 +235,11 @@ const Header = () => {
                 {/* social icons */}
                 <div className='px-4 lg:py-6 py-4 gap-6'>
                     <div className='flex px-2 lg:gap-5 gap-3'>
-                        <motion.img src={facebook} alt="" className='w-4 cursor-pointer' whileHover={{ scale: 1.4 }} />
-                        <motion.img src={telegram} alt="" className='w-4 cursor-pointer' whileHover={{ scale: 1.4 }} />
-                        <motion.img src={linkedin} alt="" className='w-4 cursor-pointer' whileHover={{ scale: 1.4 }} />
+                        {socials.map((social) => (
+                            <a href={social.s_link} target="_blank" rel="noopener noreferrer">
+                                <motion.img key={social.s_id} src={social.image.image_url} alt="" className='w-4 cursor-pointer' whileHover={{ scale: 1.4 }} />
+                            </a>
+                        ))}
                     </div>
                 </div>
             </motion.div>

@@ -1,20 +1,50 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { motion } from 'framer-motion';
-import tic_certificate from '../../assets/photo/tic-certificate.png';
+import { API_ENDPOINTS, axiosInstance } from '../APIConfig';
 
 const AboutCertificate = () => {
-
-    const badges = [
-        tic_certificate,
-        tic_certificate,
-        tic_certificate,
-        tic_certificate,
-        tic_certificate,
-        tic_certificate,
-        tic_certificate,
-        tic_certificate
-    ];
+    const [certificates, setCertificates] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
+
+    const fetchImageById = async (id) => {
+        try {
+            const response = await axiosInstance.get(`${API_ENDPOINTS.getImages}/${id}`);
+            return response.data.data;
+        } catch (error) {
+            console.error(`Failed to fetch image for id ${id}`, error);
+            return null;
+        }
+    };
+
+    useEffect(() => {
+        const fetchCertificate = async () => {
+            try{
+                const response = await axiosInstance.get(API_ENDPOINTS.getAchievement);
+                const allData = response?.data.data || [];
+
+                const newsArray = allData.filter(item => item.a_type === 2 && item.display === 1);
+                if (newsArray && !Array.isArray(newsArray)) {
+                    newsArray = [newsArray];
+                } else if (!newsArray) {
+                    newsArray = [];
+                }
+
+                const updatedNewsArray = await Promise.all(newsArray.map(async (item) => {
+                    const image = await fetchImageById(item.a_img);
+                    return {
+                        ...item,
+                        image: image
+                    };
+                }));
+
+                setCertificates(updatedNewsArray);
+            }catch(error){
+                console.error("Failed to fetch the information: ", error);
+            }
+        }
+
+        fetchCertificate();
+    }, [])
 
     return (
         <div className=' px-8 pb-12'>
@@ -26,13 +56,13 @@ const AboutCertificate = () => {
                     animate={{ x: ['0%', '-50%'] }}
                     transition={{ repeat: Infinity, duration: 20, ease: 'linear' }}
                 >
-                    {[...badges, ...badges].map((badge, index) => (
+                    {[...certificates, ...certificates].map((certificate, index) => (
                         <div key={index} className="inline-block">
                             <img
-                                src={badge}
+                                src={certificate.image.image_url}
                                 alt={`Badge ${index + 1}`}
                                 className='cursor-pointer w-60 h-40 object-fill'
-                                onClick={() => setSelectedImage(badge)}
+                                onClick={() => setSelectedImage(certificate.image.image_url)}
                             />
                         </div>
                     ))}

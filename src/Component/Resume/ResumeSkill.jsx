@@ -1,5 +1,6 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { motion, useInView } from 'framer-motion'
+import { axiosInstance, API_ENDPOINTS } from '../APIConfig';
 
 const containerVariants = {
   hidden: {},
@@ -15,7 +16,22 @@ const itemVariants = {
   visible: { opacity: 1, x: 0 },
 };
 
-const ResumeSkill = () => {
+  const ResumeSkill = () => {
+    const [skills, setSkills] = useState([]);
+
+    useEffect(() => {
+      const fetchSkills = async () => {
+        const response = await axiosInstance.get(API_ENDPOINTS.getSkill);
+        const allData = response?.data.data;
+
+        const skillsData = allData.filter(item => item.display === 1);
+
+        setSkills(skillsData);
+      }
+
+      fetchSkills();
+    }, [])
+
     return (
         <div className='px-8' >
             <h1 className='text-3xl poppins-semibold !text-[#F8F8F8]'>My Skills</h1>
@@ -27,46 +43,19 @@ const ResumeSkill = () => {
                   whileInView="visible"
                   viewport={{ once: true }}
                 >
+                  {skills.map((skill) => (
                     <motion.div
+                      key={skill.sk_id}
                       className='flex ml-2 mt-2.5 flex-col gap-2 pb-2 w-full'
-                      variants={itemVariants}
+                      variants="visible"
                     >
-                        <h2 className=' !text-[#F7F7F7] poppins-semibold'>Web Design <span className='ml-1/2 poppins-light text-[14px] text-[#D6D6D6]'>80%</span></h2>
+                        <h2 className=' !text-[#F7F7F7] poppins-semibold !text-[12px] sm:!text-[16px]'>{skill.sk_title}<span className='ml-1/2 poppins-light text-[14px] text-[#D6D6D6] ml-2'>{skill.sk_per}%</span></h2>
                         <div className="relative w-full h-2 rounded-3xl overflow-hidden px-4">
-                            <hr className="absolute top-0 left-0 w-[80%] border-3 border-[#FFBE5E] rounded-3xl z-10" />
+                            <hr style={{ width: `${skill.sk_per}%` }} className="absolute top-0 left-0 border-3 border-[#FFBE5E] rounded-3xl z-10" />
                             <hr className="w-full border-3 border-[#383838] rounded-3xl " />
                         </div>
                     </motion.div>
-                    <motion.div
-                      className='flex ml-2 mt-2.5 flex-col gap-2 pb-2 w-full'
-                      variants={itemVariants}
-                    >
-                        <h2 className=' !text-[#F7F7F7] poppins-semibold'>Graphic Design <span className='ml-1/2 poppins-light text-[14px] text-[#D6D6D6]'>70%</span></h2>
-                        <div className="relative w-full h-2 rounded-3xl overflow-hidden px-4">
-                            <hr className="absolute top-0 left-0 w-[70%] border-3 border-[#FFBE5E] rounded-3xl z-10" />
-                            <hr className="w-full border-3 border-[#383838] rounded-3xl" />
-                        </div>
-                    </motion.div>
-                    <motion.div
-                      className='flex ml-2 mt-2.5 flex-col gap-2 pb-2 w-full'
-                      variants={itemVariants}
-                    >
-                        <h2 className=' !text-[#F7F7F7] poppins-semibold'>Branding <span className='ml-1/2 poppins-light text-[14px] text-[#D6D6D6]'>90%</span></h2>
-                        <div className="relative w-full h-2 rounded-3xl overflow-hidden px-4">
-                            <hr className="absolute top-0 left-0 w-[90%] border-3 border-[#FFBE5E] rounded-3xl z-10" />
-                            <hr className="w-full border-3 border-[#383838] rounded-3xl" />
-                        </div>
-                    </motion.div>
-                    <motion.div
-                      className='flex ml-2 mt-2.5 flex-col gap-2 pb-2 w-full'
-                      variants={itemVariants}
-                    >
-                        <h2 className=' !text-[#F7F7F7] poppins-semibold'>WordPress <span className='ml-1/2 poppins-light text-[14px] text-[#D6D6D6]'>50%</span></h2>
-                        <div className="relative w-full h-2 rounded-3xl overflow-hidden px-4">
-                            <hr className="absolute top-0 left-0 w-[50%] border-3 border-[#FFBE5E] rounded-3xl z-10" />
-                            <hr className="w-full border-3 border-[#383838] rounded-3xl" />
-                        </div>
-                    </motion.div>
+                  ))}
                 </motion.div>
             </div>
         </div>

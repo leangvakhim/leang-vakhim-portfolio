@@ -1,8 +1,27 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { motion } from 'framer-motion';
+import { API_ENDPOINTS, axiosInstance } from '../APIConfig';
 
 const ContactMap = () => {
-    const mapSrc = `https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d464.4256113067386!2d104.92856067947044!3d11.545293909147391!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2skh!4v1750238759616!5m2!1sen!2skh`;
+    const [maps, setMaps] = useState([]);
+
+    useEffect(() => {
+        const fetchMap = async () => {
+            try{
+                const response = await axiosInstance.get(API_ENDPOINTS.getText);
+                const allData = response.data.data;
+
+                const filteredMap = allData.filter(item => item.t_type === 5 && item.display === 1);
+                setMaps(filteredMap);
+            }catch(error){
+                console.error("Failed to fetch role : ", error);
+            }
+        }
+
+        fetchMap();
+    }, []);
+
+    const mapSrc = maps[0]?.t_detail || "";
 
     return (
         <motion.div

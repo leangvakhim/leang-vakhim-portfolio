@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { motion, useAnimation, useInView } from "framer-motion";
 import education from "../../assets/photo/education.png";
 import experience from "../../assets/photo/experience.png";
+import { API_ENDPOINTS, axiosInstance } from '../APIConfig';
 
 const listVariants = {
   hidden: { opacity: 0 },
@@ -19,13 +20,41 @@ const itemVariants = {
 };
 
 const ResumeInformation = () => {
-    const educationRef = React.useRef(null);
+    const educationRef = useRef(null);
     const educationInView = useInView(educationRef, { once: true });
     const educationControls = useAnimation();
+    const [educations, setEducations] = useState([]);
 
-    const experienceRef = React.useRef(null);
+    const experienceRef = useRef(null);
     const experienceInView = useInView(experienceRef, { once: true });
     const experienceControls = useAnimation();
+    const [experiences, setExperiences] = useState([]);
+
+    useEffect(() => {
+      const fetchEducations = async () => {
+        const response = await axiosInstance.get(API_ENDPOINTS.getResume);
+        const allData = response?.data.data;
+
+        const educationData = allData.filter(item => item.display === 1 && item.r_type === 1);
+
+        setEducations(educationData);
+      }
+
+      fetchEducations();
+    }, [])
+
+    useEffect(() => {
+        const fetchExperiences = async () => {
+          const response = await axiosInstance.get(API_ENDPOINTS.getResume);
+          const allData = response?.data.data;
+
+          const experiencesData = allData.filter(item => item.display === 1 && item.r_type === 2);
+
+          setExperiences(experiencesData);
+        }
+
+        fetchExperiences();
+    }, [])
 
     useEffect(() => {
       if (educationInView) {
@@ -39,6 +68,8 @@ const ResumeInformation = () => {
       }
     }, [experienceInView]);
 
+    // console.log("experiences is: ", experiences);
+
     return (
         <div className='px-8 py-4'>
             {/* Education */}
@@ -49,22 +80,17 @@ const ResumeInformation = () => {
                 </div>
             </div>
             <div className="relative">
-                <motion.ul ref={educationRef} className="px-4 py-8 !space-y-6" initial="hidden" animate={educationControls} variants={listVariants}>
-                    <motion.li className="relative pl-6 mb-[-12px] mt-[-20px] before:content-[''] before:absolute before:left-1 before:top-2 before:w-2 before:h-2 before:bg-[#FFCD67] before:rounded-full before:shadow-[0_0_6px_2px_rgba(255,205,103,0.8)] after:content-[''] after:absolute after:left-[7px] after:top-3 after:h-[calc(100%+20px)] after:w-px after:bg-[#FFCD67]" variants={itemVariants}>
-                        <h4 className='poppins-semibold text-lg'>University school of the arts</h4>
-                        <span className="poppins-light text-sm !text-[#CAAE58] ">2007 - 2008</span>
-                        <p className="poppins-regular text-md text-[#D6D6D6]">Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et quas molestias exceptur.</p>
-                    </motion.li>
-                    <motion.li className="relative pl-6 mb-[-12px] before:content-[''] before:absolute before:left-1 before:top-2 before:w-2 before:h-2 before:bg-[#FFCD67] before:rounded-full before:shadow-[0_0_6px_2px_rgba(255,205,103,0.8)] after:content-[''] after:absolute after:left-[7px] after:top-3 after:h-[calc(100%+20px)] after:w-px after:bg-[#FFCD67]" variants={itemVariants}>
-                        <h4 className='poppins-semibold text-lg'>University school of the arts</h4>
-                        <span className="poppins-light text-sm !text-[#CAAE58] ">2007 - 2008</span>
-                        <p className="poppins-regular text-md text-[#D6D6D6]">Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et quas molestias exceptur.</p>
-                    </motion.li>
-                    <motion.li className="relative pl-6 before:content-[''] before:absolute before:left-1 before:top-2 before:w-2 before:h-2 before:bg-[#FFCD67] before:rounded-full before:shadow-[0_0_6px_2px_rgba(255,205,103,0.8)]" variants={itemVariants}>
-                        <h4 className='poppins-semibold text-lg'>University school of the arts</h4>
-                        <span className="poppins-light text-sm !text-[#CAAE58] ">2007 - 2008</span>
-                        <p className="poppins-regular text-md text-[#D6D6D6]">Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et quas molestias exceptur.</p>
-                    </motion.li>
+                <motion.ul ref={educationRef} className="px-4 py-8 !space-y-6" initial="hidden" animate="visible" variants={listVariants}>
+                    {educations.map((education) => (
+                        <motion.li key={education.r_id} className="relative pl-6  before:content-[''] before:absolute before:left-1 before:top-2 before:w-2 before:h-2 before:bg-[#FFCD67] before:rounded-full before:shadow-[0_0_6px_2px_rgba(255,205,103,0.8)] after:content-[''] after:absolute after:left-[7px] after:top-3 after:h-[calc(100%+20px)] after:w-px after:bg-[#FFCD67]" variants={itemVariants}>
+                            <h4 className='poppins-semibold text-lg'>{education.r_title}</h4>
+                            <span className="poppins-light text-sm !text-[#CAAE58] ">{education.r_duration}</span>
+                            <div
+                              className="poppins-regular text-md text-[#D6D6D6]"
+                              dangerouslySetInnerHTML={{ __html: education.r_detail }}
+                            />
+                        </motion.li>
+                    ))}
                 </motion.ul>
             </div>
 
@@ -76,22 +102,23 @@ const ResumeInformation = () => {
                 </div>
             </div>
             <div className="relative">
-                <motion.ul ref={experienceRef} className="px-4 py-8 !space-y-6" initial="hidden" animate={experienceControls} variants={listVariants}>
-                    <motion.li className="relative pl-6 mb-[-12px] mt-[-20px] before:content-[''] before:absolute before:left-1 before:top-2 before:w-2 before:h-2 before:bg-[#FFCD67] before:rounded-full before:shadow-[0_0_6px_2px_rgba(255,205,103,0.8)] after:content-[''] after:absolute after:left-[7px] after:top-3 after:h-[calc(100%+20px)] after:w-px after:bg-[#FFCD67]" variants={itemVariants}>
-                        <h4 className='poppins-semibold text-lg'>Creative Directory</h4>
-                        <span className="poppins-light text-sm !text-[#CAAE58] ">2015 - Present</span>
-                        <p className="poppins-regular text-md text-[#D6D6D6]">Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et quas molestias exceptur.</p>
-                    </motion.li>
-                    <motion.li className="relative pl-6 mb-[-12px] before:content-[''] before:absolute before:left-1 before:top-2 before:w-2 before:h-2 before:bg-[#FFCD67] before:rounded-full before:shadow-[0_0_6px_2px_rgba(255,205,103,0.8)] after:content-[''] after:absolute after:left-[7px] after:top-3 after:h-[calc(100%+20px)] after:w-px after:bg-[#FFCD67]" variants={itemVariants}>
-                        <h4 className='poppins-semibold text-lg'>Art Director</h4>
-                        <span className="poppins-light text-sm !text-[#CAAE58] ">2013 - 2015</span>
-                        <p className="poppins-regular text-md text-[#D6D6D6]">Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et quas molestias exceptur.</p>
-                    </motion.li>
-                    <motion.li className="relative pl-6 before:content-[''] before:absolute before:left-1 before:top-2 before:w-2 before:h-2 before:bg-[#FFCD67] before:rounded-full before:shadow-[0_0_6px_2px_rgba(255,205,103,0.8)]" variants={itemVariants}>
-                        <h4 className='poppins-semibold text-lg'>Art Director</h4>
-                        <span className="poppins-light text-sm !text-[#CAAE58] ">2013 - 2015</span>
-                        <p className="poppins-regular text-md text-[#D6D6D6]">Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et quas molestias exceptur.</p>
-                    </motion.li>
+                <motion.ul ref={experienceRef} className="px-4 py-2 !space-y-6" initial="hidden" animate="visible" variants={listVariants}>
+                    {experiences.map((experience, index) => (
+                        <motion.li
+                          key={experience.r_id}
+                          className={`relative pl-6 before:content-[''] before:absolute before:left-1 before:top-2 before:w-2 before:h-2 before:bg-[#FFCD67] before:rounded-full before:shadow-[0_0_6px_2px_rgba(255,205,103,0.8)] after:content-[''] after:absolute after:left-[7px] after:top-3 ${
+                            index === experiences.length - 1 ? 'after:h-[calc(100%-10px)]' : 'after:h-[calc(100%+20px)]'
+                          } after:w-px after:bg-[#FFCD67]`}
+                          variants={itemVariants}
+                        >
+                            <h4 className='poppins-semibold text-lg'>{experience.r_title}</h4>
+                            <span className="poppins-light text-sm !text-[#CAAE58] ">{experience.r_duration}</span>
+                            <div
+                              className="poppins-regular text-md text-[#D6D6D6]"
+                              dangerouslySetInnerHTML={{ __html: experience.r_detail }}
+                            />
+                        </motion.li>
+                    ))}
                 </motion.ul>
             </div>
         </div>
