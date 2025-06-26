@@ -47,6 +47,34 @@ const API_ENDPOINTS = {
   // email
   createEmail: `${API_BASEURL}/email`,
 
+  // login
+    LoginUser: `${API_BASEURL}/login`,
+
 };
 
-export {axiosInstance, API_BASEURL, API_ENDPOINTS, API };
+const autoLoginAsGuest = async () => {
+  try {
+    if (!sessionStorage.getItem('guest_token')) {
+      const res = await axios.post(API_ENDPOINTS.LoginUser, {
+        name: 'guest',
+        password: 'guest123',
+      });
+      sessionStorage.setItem('guest_token', res.data.access_token);
+    }
+  } catch (err) {
+    console.error('Guest login failed:', err);
+  }
+};
+
+axiosInstance.interceptors.request.use(
+  config => {
+    const token = sessionStorage.getItem('guest_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  error => Promise.reject(error)
+);
+
+export {axiosInstance, API_BASEURL, API_ENDPOINTS, API, autoLoginAsGuest};
