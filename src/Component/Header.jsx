@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { motion, AnimatePresence } from "framer-motion";
 import {Link} from "react-router-dom";
-import Profile from "../assets/photo/profile.jpeg";
+import Profile from "../assets/photo/profile.jpg";
 import mail from "../assets/photo/mail.png";
 import location from "../assets/photo/location.png";
 import smartphone from "../assets/photo/smartphone.png";
