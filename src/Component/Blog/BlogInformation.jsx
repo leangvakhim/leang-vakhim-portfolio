@@ -68,7 +68,7 @@ const BlogInformation = () => {
                         <div className='w-full overflow-hidden rounded-2xl relative'>
                             <img
                                 src={blog?.image.image_url}
-                                className='w-full h-full rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
+                                className='w-full md:h-80 h-full rounded-2xl object-fill transform transition-transform duration-300 group-hover:scale-110'
                             />
                         </div>
                         <div className='flex flex-col px-6 py-8'>
