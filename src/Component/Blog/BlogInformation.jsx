@@ -88,7 +88,9 @@ const BlogInformation = () => {
                 ))}
 
                 {isModalOpen && modalData && (
-                    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 px-6 md:px-0">
+                    <div
+                        onClick={() => setIsModalOpen(false)}
+                        className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 px-6 md:px-0">
                         <div className="bg-[#1E1E1F] p-6 rounded-xl max-w-md md:max-w-lg lg:max-w-2xl w-full relative text-white max-h-[90vh] overflow-y-auto">
                         <button
                             className="absolute top-3 right-3 text-white text-xl cursor-pointer"
