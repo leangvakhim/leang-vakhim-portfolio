@@ -156,7 +156,7 @@ const Header = () => {
                             {names.map((name) => (
                                 <h1 key={name.t_id} className='font-medium text-2xl font-mono !text-[#F8F8F8] poppins-medium'>{name.t_detail}</h1>
                             ))}
-                            <span className='text-[12px] poppins-light px-3 py-1.5 bg-[#2B2B2C] w-fit rounded-lg !text-[#F8F8F8] flex'>
+                            <span className='text-[9px] md:text-[12px] poppins-light px-3 py-1.5 bg-[#2B2B2C] w-fit rounded-lg !text-[#F8F8F8] flex'>
                                 <span>
                                     {displayText}
                                     <span className="animate-pulse ml-1">|</span>
