@@ -154,7 +154,7 @@ const Header = () => {
                         <img src={Profile} alt="" className='w-28 h-28 rounded-2xl border !border-[#383838] object-fill'/>
                         <div className='flex flex-col gap-3 py-2 justify-center'>
                             {names.map((name) => (
-                                <h1 key={name.t_id} className='font-medium text-2xl font-mono !text-[#F8F8F8] poppins-medium'>{name.t_detail}</h1>
+                                <h1 key={name.t_id} className='font-medium md:text-2xl text:xl font-mono !text-[#F8F8F8] poppins-medium'>{name.t_detail}</h1>
                             ))}
                             <span className='text-[9px] md:text-[12px] poppins-light px-3 py-1.5 bg-[#2B2B2C] w-fit rounded-lg !text-[#F8F8F8] flex'>
                                 <span>
