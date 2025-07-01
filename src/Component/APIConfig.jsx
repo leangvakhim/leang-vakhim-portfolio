@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from "axios";
 
-const API = "https://api.aimostore.shop";
-// const API = "http://127.0.0.1:8000";
+// const API = "https://api.aimostore.shop";
+const API = "http://127.0.0.1:8000";
 
 const API_BASEURL = `${API}/api`;
 
@@ -15,7 +15,22 @@ const axiosInstance = axios.create({
     }
 });
 
+axiosInstance.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      // localStorage.removeItem('token');
+      // window.location.reload();
+      console.warn("🔒 Unauthorized request detected (401).");
+    }
+    return Promise.reject(error);
+  }
+);
+
 const API_ENDPOINTS = {
+
+  //guest
+  getGuest: `${API_BASEURL}/guest`,
 
   // image
   getImages: `${API_BASEURL}/image`,

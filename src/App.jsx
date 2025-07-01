@@ -6,25 +6,19 @@ import Resume from './Page/Resume'
 import Portfolio from './Page/Portfolio'
 import Blog from './Page/Blog'
 import Contact from './Page/Contact'
-import { API_ENDPOINTS, axiosInstance } from './Component/APIConfig'
+import { API_BASEURL, API_ENDPOINTS, axiosInstance } from './Component/APIConfig'
 
 function App() {
   const [guestLoginSuccess, setGuestLoginSuccess] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loginGuest = async () => {
-      try {
-        await axiosInstance.post(API_ENDPOINTS.LoginUser, {
-          name: "guest",
-          password: "guest123"
-        }, {
-          withCredentials: true
-        });
-
+    const GuestLogin = async () => {
+      try{
+        localStorage.removeItem('guest_token');
         sessionStorage.removeItem("guest_token");
         setGuestLoginSuccess(true);
-
+        await requestGuestToken();
       } catch (error) {
         console.error("Login failed:", error);
       } finally {
@@ -32,13 +26,27 @@ function App() {
       }
     };
 
-    loginGuest();
+    GuestLogin();
   }, []);
 
   useEffect(() => {
     if (!guestLoginSuccess) return;
 
   }, [guestLoginSuccess]);
+
+  async function requestGuestToken() {
+    try {
+      const response = await axiosInstance.post(`${API_BASEURL}/guest`);
+      const token = response.data?.guest_token;
+
+      if (token) {
+        // localStorage.setItem('token', token);
+        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      }
+    } catch (error) {
+      console.error('Failed to get guest token:', error);
+    }
+  }
 
   if (loading) return <div>Loading...</div>;
 

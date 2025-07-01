@@ -1,16 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { motion, AnimatePresence } from "framer-motion";
-import {Link} from "react-router-dom";
 import Profile from "../assets/photo/profile.jpg";
-import mail from "../assets/photo/mail.png";
-import location from "../assets/photo/location.png";
-import smartphone from "../assets/photo/smartphone.png";
-import calendar from "../assets/photo/calendar.png";
-import facebook from "../assets/photo/facebook.png";
-import telegram from "../assets/photo/telegram.png";
-import linkedin from "../assets/photo/linkedin.png";
-import { axiosInstance, API_ENDPOINTS } from './APIConfig';
-import { all } from 'axios';
+import { axiosInstance, API_ENDPOINTS,  } from './APIConfig';
 
 const Header = () => {
     const [showContacts, setShowContacts] = useState(false);
