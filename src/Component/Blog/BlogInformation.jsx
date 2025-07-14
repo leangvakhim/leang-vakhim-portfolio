@@ -51,7 +51,7 @@ const BlogInformation = () => {
 
     return (
         <div className='px-8 py-6'>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 w-full'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 w-full overflow-hidden'>
                 {blogs.map((blog) => (
                     <motion.div
                         key={blog.b_id}
