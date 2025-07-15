@@ -54,7 +54,7 @@ const PortfolioInformation = () => {
         <div className='px-8 py-4'>
             {/* large screen */}
             <div className='hidden lg:block'>
-                <div className='flex gap-6 items-start justify-start'>
+                <div className='flex gap-6 items-start justify-start overflow-x-auto whitespace-nowrap !scrollbar-hide'>
                   {["All", ...new Set(portfolios.map((p) => p.p_category))].map((category) => (
                     <h1
                       key={category}
